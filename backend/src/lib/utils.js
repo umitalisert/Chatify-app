@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import { ENV } from "./env.js";
 
-export const genereteToken = (userId, res) => {
+export const generateToken = (userId, res) => {
   const { JWT_SECRET } = process.env;
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET is not configured");
@@ -11,7 +12,7 @@ export const genereteToken = (userId, res) => {
   });
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
+    secure: ENV.NODE_ENV !== "development",
     sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
